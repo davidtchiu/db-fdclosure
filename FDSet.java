@@ -4,10 +4,11 @@ import java.util.StringJoiner;
 import java.util.TreeSet;
 
 /**
+ * <<READ, BUT DO NOT MODIFY THIS FILE>>
  * This class represents a set of functional dependencies
  * 
  * @author David
- * @version 5/18/2026
+ * @version 10/20/2026
  */
 public class FDSet implements Iterable<FD> {
   private final Set<FD> fdset;
@@ -21,7 +22,7 @@ public class FDSet implements Iterable<FD> {
     // we use a TreeSet to ensure FDs are sorted when printed
     this.fdset = new TreeSet<>();
     for (FD f : fds) {
-      add(new FD(f));
+      add(f);
     }
   }
 
@@ -33,7 +34,7 @@ public class FDSet implements Iterable<FD> {
   public FDSet(FDSet original) {
     this.fdset = new TreeSet<>();
     for (FD f : original.fdset) {
-      add(new FD(f));
+      add(f);
     }
   }
 
