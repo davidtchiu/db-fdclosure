@@ -1,84 +1,101 @@
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
- * This utility class is not meant to be instantitated, and just provides some
- * useful methods on FD sets.
- * 
+ * This utility class cannot be instantiated and provides useful methods on FD sets.
+ * Input structures must not be modified by any method.
+ *
  * @author <<YOUR NAME>>
  * @version <<DATE>>
  */
 public final class FDUtil {
+  /**
+   * A private constructor prevents people from accidentally instantiating this class.
+   */
+  private FDUtil() {}
 
   /**
-   * Resolves all trivial FDs in the given set of FDs
-   * 
-   * @param fdset (Immutable) FD Set
-   * @return a set of trivial FDs with respect to the given FDSet
+   * Generates trivial FDs for left-hand sides appearing in the input FD set.
+   * FDs with empty right-hand sides are omitted.
+   *
+   * @param fdset input FD set; must not be modified
+   * @return a new set of trivial FDs
    */
   public static FDSet trivial(final FDSet fdset) {
-    // TODO: Obtain the power set of each FD's left-hand attributes. For each
-    // element in the power set, create a new FD and add it to the a new FDSet.
+    // TODO: Obtain the power set of each FD's left-hand attributes.
+    // For each non-empty subset, create an FD with the original left-hand
+    // side and that subset as its right-hand side. Add it to a new FDSet.
 
     return null;
   }
 
   /**
-   * Augments every FD in the given set of FDs with the given attributes
-   * 
-   * @param fdset FD Set (Immutable)
-   * @param attrs a set of attributes with which to augment FDs (Immutable)
-   * @return a set of augmented FDs
+   * Augments both sides of every input FD with the given attributes.
+   *
+   * @param fdset input FD set; must not be modified
+   * @param attrs attributes to union with both sides; must not be modified
+   * @return a new set of augmented FDs
    */
   public static FDSet augment(final FDSet fdset, final Set<String> attrs) {
-    // TODO: Copy each FD in the given set and then union both sides with the given
-    // set of attributes, and add this augmented FD to a new FDSet.
+    // TODO: Copy each FD in the input set, union both sides with attrs,
+    // and add the augmented FD to a new FDSet.
 
     return null;
   }
 
   /**
-   * Exhaustively resolves transitive FDs with respect to the given set of FDs
-   * 
-   * @param fdset (Immutable) FD Set
-   * @return all transitive FDs with respect to the input FD set
+   * Repeatedly applies transitivity until no new FDs can be generated.
+   * Given X -> Y and Z -> W, generate X -> W when Z is a subset of Y.
+   *
+   * @param fdset input FD set; must not be modified
+   * @return newly derived FDs, excluding FDs already in the input set
    */
   public static FDSet transitive(final FDSet fdset) {
-    // TODO: Examine each pair of FDs in the given set. If the transitive property
-    // holds on the pair of FDs, then generate the new FD and add it to a new FDSet.
-    // Repeat until no new transitive FDs are found.
+    // TODO: Create a working copy of the input FD set.
+    // Examine pairs of FDs and apply the rule described above.
+    // Newly derived FDs must participate in subsequent iterations.
+    // Collect additions separately to avoid modifying a set while iterating.
+    // Repeat until no new FDs are found.
+    // Return the derived FDs that were not in the original input.
 
     return null;
   }
 
   /**
-   * Generates the closure of the given FD Set
-   * 
-   * @param fdset (Immutable) FD Set
-   * @return the closure of the input FD Set
+   * Generates the closure of the input FD set, omitting FDs with empty
+   * right-hand sides. The relation's attributes are assumed to be exactly
+   * those appearing on either side of the input FDs.
+   *
+   * @param fdset input FD set; must not be modified
+   * @return a new FD set containing the closure
    */
   public static FDSet fdSetClosure(final FDSet fdset) {
-    // TODO: Use the FDSet copy constructor to deep copy the given FDSet
+    // TODO: Use the FDSet copy constructor to deep copy the input FD set.
 
-    // TODO: Generate new FDs by applying Trivial and Augmentation Rules, followed
-    // by Transitivity Rule, and add new FDs to the result.
-    // Repeat until no further changes are detected.
+    // TODO: Collect all attributes appearing on either side of the input FDs
+    // into a set R, then compute powerSet(R).
+
+    // TODO: For every non-empty subset X of R, add X -> X to the working FD set.
+
+    // TODO: Repeatedly apply the following:
+    // 1. For every subset Z of R, augment the working FD set with Z
+    //    and add the results to the working FD set.
+    // 2. Generate trivial FDs and add them to the working FD set.
+    // 3. Generate transitive FDs and add them to the working FD set.
+    // Stop when the size of the working FD set no longer changes.
 
     return null;
   }
 
   /**
-   * Generates the power set of the given set (that is, all subsets of
-   * the given set of elements)
-   * 
-   * @param set Any set of elements (Immutable)
-   * @return the power set of the input set
+   * Generates the power set of the input set, including the empty subset.
+   *
+   * @param set input set; must not be modified
+   * @return a new set containing all subsets of the input set
    */
-  @SuppressWarnings("unchecked")
   public static <E> Set<Set<E>> powerSet(final Set<E> set) {
-
-    // base case: power set of the empty set is the set containing the empty set
-    if (set.size() == 0) {
+    // Base case: the power set of the empty set contains just the empty set.
+    if (set.isEmpty()) {
       Set<Set<E>> basePset = new HashSet<>();
       basePset.add(new HashSet<>());
       return basePset;
@@ -86,14 +103,17 @@ public final class FDUtil {
 
     // Recursive case
 
-    // TODO: remove the first element from the current input set
+    // TODO: Choose an element and create a copy of the input set without it.
 
-    // TODO: recurse and obtain the power set of the reduced set of elements
+    // TODO: Recursively obtain the power set of the reduced set.
 
-    // TODO: iterate through all elements of current power set and union with first
-    // element, then add all those sets to the power set you just obtained recursively.
+    // TODO: For each subset returned by recursion, create a new copy that
+    // also contains the chosen element. Collect these new subsets separately.
+    // Do not modify subsets already stored in a HashSet.
 
-    // TODO: Return the power set
+    // TODO: Combine the subsets without the chosen element and the new
+    // subsets containing it, then return the result.
+
     return null;
   }
 }
