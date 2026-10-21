@@ -18,7 +18,8 @@ public class Main {
     System.out.println(FDUtil.fdSetClosure(fdset));
     System.out.println(FDUtil.fdSetClosure(fdset2));
 
-    // Test FD equality: fdset and gdset are equal iff their closures are equal
+    // Test FD equality: fdset and gdset are logically equivalent iff their closures are equal
     System.out.println("Equals? " + (fdset.equals(fdset2)));
+    System.out.println("Equivalent? " + (fdset.isEquivalentTo(fdset2)));
   }
 }
