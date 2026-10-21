@@ -55,7 +55,7 @@ public final class FDUtil {
     FDSet current = new FDSet(fdset); // make a copy of F
 
     // TODO
-    return null;
+    return current;
   }
 
   /**
