@@ -12,8 +12,8 @@ import java.util.TreeSet;
  */
 public class FD implements Comparable<FD> {
 
-  private Set<String> left;
-  private Set<String> right;
+  final private Set<String> left;
+  final private Set<String> right;
 
   /**
    * Creation of an empty functional dependency
@@ -64,7 +64,7 @@ public class FD implements Comparable<FD> {
    * @param attrs Set of attributes
    */
   public void addToLeft(Set<String> attrs) {
-    this.left.addAll(new TreeSet<>(attrs));
+    this.left.addAll(attrs);
   }
 
   /**
@@ -73,14 +73,14 @@ public class FD implements Comparable<FD> {
    * @param attrs Set of attributes
    */
   public void addToRight(Set<String> attrs) {
-    this.right.addAll(new TreeSet<>(attrs));
+    this.right.addAll(attrs);
   }
 
   /**
    * Tests whether the left-hand side contains the given set of attributes
    * 
    * @param attrs Set of attributes
-   * @return true if all atributes are contained on the left
+   * @return true if all attributes are contained on the left
    */
   public boolean leftContains(Set<String> attrs) {
     return this.left.containsAll(attrs);
@@ -90,7 +90,7 @@ public class FD implements Comparable<FD> {
    * Tests whether the right-hand side contains the given set of attributes
    * 
    * @param attrs Set of attributes
-   * @return true if all atributes are contained on the right
+   * @return true if all attributes are contained on the right
    */
   public boolean rightContains(Set<String> attrs) {
     return this.right.containsAll(attrs);
